@@ -802,9 +802,9 @@ func (g *Generator) WrapTypes() {
 			// Make sure the registration path matches the import path.
 			// We check this by making sure that the file's name name
 			// starts with the package name.
-			if err := proto.CheckImportPath(f.GetName(), f.GetPackage()); err != nil {
-				panic(err)
-			}
+			//if err := proto.CheckImportPath(f.GetName(), f.GetPackage()); err != nil {
+			//	panic(err)
+			//}
 		}
 
 		fd := &FileDescriptor{
@@ -2481,7 +2481,8 @@ func (g *Generator) generateDefaultConstants(mc *msgCtx, topLevelFields []topLev
 // We did not want to duplicate the code since it is quite intricate so we came
 // up with this ugly method. At least the logic is in one place. This can be reworked.
 func (g *Generator) generateGet(mc *msgCtx, protoField *descriptor.FieldDescriptorProto, protoType descriptor.FieldDescriptorProto_Type,
-	oneof bool, fname, tname, uname, oneoftname, fullpath, gname, def string) {
+	oneof bool, fname, tname, uname, oneoftname, fullpath, gname, def string,
+) {
 	star := ""
 	if (protoType != descriptor.FieldDescriptorProto_TYPE_MESSAGE) &&
 		(protoType != descriptor.FieldDescriptorProto_TYPE_GROUP) &&
@@ -2689,7 +2690,6 @@ func (g *Generator) generateMessageStruct(mc *msgCtx, topLevelFields []topLevelF
 func (g *Generator) generateGetters(mc *msgCtx, topLevelFields []topLevelField) {
 	for _, pf := range topLevelFields {
 		pf.getter(g, mc)
-
 	}
 }
 

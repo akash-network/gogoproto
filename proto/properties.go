@@ -641,11 +641,6 @@ func RegisterFile(filename string, fileDescriptor []byte) {
 		panic(err)
 	}
 
-	// Ensure the import path on the app file is good.
-	if err := CheckImportPath(fd.GetName(), fd.GetPackage()); err != nil {
-		fmt.Printf("WARNING: proto: %v\n", err)
-	}
-
 	file, err := protodesc.FileOptions{AllowUnresolvable: true}.New(fd, gogoProtoRegistry)
 	if err != nil {
 		panic(err)
@@ -667,7 +662,7 @@ func RegisterFile(filename string, fileDescriptor []byte) {
 func FileDescriptor(filename string) []byte { return protoFiles[filename] }
 
 // AllFileDescriptors returns all the file descriptors registered with gogoproto
-// as a map of the full file name of the .proto file to its gzip compressed
+// as a map of the full file name of the .proto file to its gzip compressed=-
 // FileDescriptorProto.
 func AllFileDescriptors() map[string][]byte {
 	// we clone the map to prevent the caller from mutating it
